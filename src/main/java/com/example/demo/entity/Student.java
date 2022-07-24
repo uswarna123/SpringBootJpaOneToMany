@@ -34,6 +34,7 @@ public class Student {
 
     public Course getCourseId() {
         return courseId;
+        //addede nenen
     }
 
     public void setCourseId(Course courseId) {
