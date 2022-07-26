@@ -18,14 +18,14 @@ public class StudentDataTableLoader implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception
     {
-     //  addStudentData();
+     // addStudentData();
 
     }
      public void addStudentData()
      {
          Student student =  new Student();
          student.setStudentName("Tony");
-       // student.setCourseId();
+         student.setCourse(new Course(1L));
          studentRepository.save(student);
          System.out.println("new record inserted to student table...");
 
