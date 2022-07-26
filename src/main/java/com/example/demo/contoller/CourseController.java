@@ -49,5 +49,4 @@ public class CourseController
     {
         courseRepository.deleteAll();
     }
-
 }
