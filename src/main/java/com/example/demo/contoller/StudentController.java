@@ -50,7 +50,6 @@ public class StudentController
          return ResponseEntity.ok(modifiedStudent);
      }
 
-
     @DeleteMapping("/DeleteAllStudents")
     public String deleteAllStudent(){
         studentRepository.deleteAll();
