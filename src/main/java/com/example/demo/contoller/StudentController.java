@@ -22,15 +22,24 @@ public class StudentController
         System.out.println("Tested ok");
         return "Tested Ok";
     }
-   @GetMapping("/findAllStudents")
+  /* @GetMapping("/findAllStudents")
+    public List<Student> findAllStudents(){
+
+        List<Student> list = studentRepository.findAll();
+        System.out.println(list);
+        return list;
+    } */
+    @GetMapping("/findAllStudents")
     public List<Student> findAllStudents(){
         return studentRepository.findAll();
     }
+
     @PostMapping("/addStudent")
     public ResponseEntity<Student> addNewStudent(@RequestBody Student student){
         Student response=studentRepository.save(student);
         return ResponseEntity.ok(response);
     }
+
 
      @PutMapping("/UpdateStudent/{id}")
      public ResponseEntity<Student> updateStudent(@RequestBody Student student,@PathVariable(name = "id")Long Id){
