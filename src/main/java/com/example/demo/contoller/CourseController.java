@@ -1,5 +1,6 @@
 package com.example.demo.contoller;
 import com.example.demo.entity.Course;
+import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +28,7 @@ public class CourseController
     }
      @PutMapping("/UpdateCourse/{Id}")
       public ResponseEntity<Course> updateCourse(@RequestBody Course course,@PathVariable(name = "Id")Long Id){
-         Course rs=courseRepository.findById(Id).get();
+         Course rs=courseRepository.findById(Id).orElseThrow(()->new ResourceNotFoundException("User not found with id: "+Id));
          rs.setName(course.getName());
          rs.setDuration(course.getDuration());
          Course updatedCourse = courseRepository.save(rs);
@@ -36,7 +37,7 @@ public class CourseController
 
     @PatchMapping("/ModifyCourse/{Id}")
     public ResponseEntity<Course> modifyCourse(@RequestBody Course course,@PathVariable(name = "Id") Long Id){
-      Course rs=courseRepository.findById(Id).get();
+      Course rs=courseRepository.findById(Id).orElseThrow(()->new ResourceNotFoundException("Resource Not Found With id: "+Id));
       rs.setName(course.getName());
       rs.setDuration(course.getDuration());
         Course result = courseRepository.save(rs);

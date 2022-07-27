@@ -2,6 +2,7 @@ package com.example.demo.contoller;
 
 import com.example.demo.entity.Course;
 import com.example.demo.entity.Student;
+import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -42,8 +43,10 @@ public class StudentController
 
 
      @PutMapping("/UpdateStudent/{id}")
-     public ResponseEntity<Student> updateStudent(@RequestBody Student student,@PathVariable(name = "id")Long Id){
-         Student studentResponse=studentRepository.findById(Id).get();
+     public ResponseEntity<Student> updateStudent(@RequestBody Student student,
+                                                  @PathVariable(name = "id")Long Id){
+         Student studentResponse=studentRepository.findById(Id).orElseThrow(()->new
+                 ResourceNotFoundException("Resource Not Found with id:" +Id));
          studentResponse.setStudentName(student.getStudentName());
          studentResponse.setCourse(student.getCourse());
          Student updatedStudent = studentRepository.save(studentResponse);
@@ -51,8 +54,10 @@ public class StudentController
      }
 
      @PatchMapping("/ModifyStudent/{Id}")
-     public ResponseEntity<Student> modifyStudent(@RequestBody Student student,@PathVariable(name = "Id") Long Id){
-         Student studentResponse = studentRepository.findById(Id).get();
+     public ResponseEntity<Student> modifyStudent(@RequestBody Student student,
+                                                  @PathVariable(name = "Id") Long Id){
+         Student studentResponse = studentRepository.findById(Id).orElseThrow
+                 (()->new ResourceNotFoundException("Resource Not found with id: "+Id));
          studentResponse.setStudentName(student.getStudentName());
          studentResponse.setCourse(student.getCourse());
          Student modifiedStudent = studentRepository.save(studentResponse);
