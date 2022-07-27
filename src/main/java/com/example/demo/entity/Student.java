@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -7,6 +8,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.Objects;
 
 @Entity
 @Table(name="student")
@@ -19,6 +21,8 @@ public class Student {
     private String studentName;
 
 
+    @JsonIgnore
+  //  @JsonBackReference
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id")
@@ -40,14 +44,7 @@ public class Student {
         this.studentName = studentName;
     }
 
-    @Override
-    public String toString() {
-        return "Student{" +
-                "id=" + id +
-                ", studentName='" + studentName + '\'' +
-                ", course=" + course +
-                '}';
-    }
+
 
     public Student(String studentName, Course course) {
         this.studentName = studentName;
@@ -92,5 +89,18 @@ public class Student {
 
     public void setUpdateDate(Date updateDate) {
         this.updateDate = updateDate;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Student student = (Student) o;
+        return Objects.equals(id, student.id) && Objects.equals(studentName, student.studentName) && Objects.equals(course, student.course) && Objects.equals(createDate, student.createDate) && Objects.equals(updateDate, student.updateDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, studentName, course, createDate, updateDate);
     }
 }
