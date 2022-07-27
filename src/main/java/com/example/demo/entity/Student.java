@@ -21,7 +21,7 @@ public class Student {
     private String studentName;
 
 
-    @JsonIgnore
+   // @JsonIgnore
   //  @JsonBackReference
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
